@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Button, TextInput, Text, View, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 
-function ScreenA1({ navigation }) {
+// Screen A1
+function ScreenA1() {
+  const navigation = useNavigation();
   return (
     <View style={[styles.screen, { backgroundColor: '#FFC0CB' }]}>
       <Text style={styles.text}>Pantalla A1</Text>
@@ -14,6 +16,7 @@ function ScreenA1({ navigation }) {
   );
 }
 
+// Screen A2
 function ScreenA2() {
   return (
     <View style={[styles.screen, { backgroundColor: '#FFC0CB' }]}>
@@ -22,7 +25,9 @@ function ScreenA2() {
   );
 }
 
-function ScreenB1({ navigation }) {
+// Screen B1
+function ScreenB1() {
+  const navigation = useNavigation();
   return (
     <View style={[styles.screen, { backgroundColor: '#FFFF00' }]}>
       <Text style={styles.text}>Pantalla B1</Text>
@@ -31,6 +36,7 @@ function ScreenB1({ navigation }) {
   );
 }
 
+// Screen B2
 function ScreenB2() {
   return (
     <View style={[styles.screen, { backgroundColor: '#FFFF00' }]}>
@@ -39,6 +45,7 @@ function ScreenB2() {
   );
 }
 
+// Screen C1: Pantalla que pide Nombre y Teléfono
 function ScreenC1({ navigation }) {
   const [nombre, setNombre] = React.useState('');
   const [telefono, setTelefono] = React.useState('');
@@ -64,6 +71,7 @@ function ScreenC1({ navigation }) {
   );
 }
 
+// Screen C2: Mostrar Nombre y Teléfono
 function ScreenC2({ route, navigation }) {
   const { nombre, telefono } = route.params;
 
@@ -75,7 +83,16 @@ function ScreenC2({ route, navigation }) {
   );
 }
 
+// Screen D1: Pantalla de Configuración principal
+function ScreenD1() {
+  return (
+    <View style={[styles.screen, { backgroundColor: '#ADD8E6' }]}>
+      <Text style={styles.text}>Pantalla de Configuración</Text>
+    </View>
+  );
+}
 
+// Stack A Navigator
 const StackA = createNativeStackNavigator();
 function StackANavigator() {
   return (
@@ -86,6 +103,7 @@ function StackANavigator() {
   );
 }
 
+// Stack B Navigator
 const StackB = createNativeStackNavigator();
 function StackBNavigator() {
   return (
@@ -96,6 +114,7 @@ function StackBNavigator() {
   );
 }
 
+// Stack C Navigator
 const StackC = createNativeStackNavigator();
 function StackCNavigator() {
   return (
@@ -106,6 +125,17 @@ function StackCNavigator() {
   );
 }
 
+// Stack D Navigator (Configuración)
+const StackD = createNativeStackNavigator();
+function StackDNavigator() {
+  return (
+    <StackD.Navigator>
+      <StackD.Screen name="ScreenD1" component={ScreenD1} />
+    </StackD.Navigator>
+  );
+}
+
+// Bottom Tabs Navigator
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
@@ -131,10 +161,18 @@ function MyTabs() {
           tabBarIcon: ({ color }) => <Ionicons name="person" size={24} color={color} />,
         }}
       />
+      <Tab.Screen
+        name="Configuración"
+        component={StackDNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <Ionicons name="settings" size={24} color={color} />,
+        }}
+      />
     </Tab.Navigator>
   );
 }
 
+// App Component
 export default function App() {
   return (
     <NavigationContainer>
@@ -143,6 +181,7 @@ export default function App() {
   );
 }
 
+// Styles
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
